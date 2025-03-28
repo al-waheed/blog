@@ -1,7 +1,7 @@
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { updatePost } from '../redux/blogSlice';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { updatePost } from "../redux/blogSlice";
 
 const EditPostModal = ({ post, onClose }) => {
   const dispatch = useDispatch();
@@ -10,12 +10,12 @@ const EditPostModal = ({ post, onClose }) => {
     initialValues: {
       title: post.title,
       content: post.content,
-      imageUrl: post.imageUrl || '',
+      imageUrl: post.imageUrl || "",
     },
     validationSchema: Yup.object({
-      title: Yup.string().required('Title is required'),
-      content: Yup.string().required('Content is required'),
-      imageUrl: Yup.string().url('Must be a valid URL').nullable(),
+      title: Yup.string().required("Title is required"),
+      content: Yup.string().required("Content is required"),
+      imageUrl: Yup.string().url("Must be a valid URL").nullable(),
     }),
     onSubmit: (values) => {
       dispatch(updatePost({ id: post.id, ...values }));
@@ -38,10 +38,12 @@ const EditPostModal = ({ post, onClose }) => {
               className="input"
             />
             {formik.errors.title && (
-              <div className="text-red-500 text-sm mt-1">{formik.errors.title}</div>
+              <div className="text-red-500 text-sm mt-1">
+                {formik.errors.title}
+              </div>
             )}
           </div>
-          
+
           <div>
             <input
               type="url"
@@ -52,7 +54,9 @@ const EditPostModal = ({ post, onClose }) => {
               className="input"
             />
             {formik.errors.imageUrl && (
-              <div className="text-red-500 text-sm mt-1">{formik.errors.imageUrl}</div>
+              <div className="text-red-500 text-sm mt-1">
+                {formik.errors.imageUrl}
+              </div>
             )}
           </div>
 
@@ -65,7 +69,9 @@ const EditPostModal = ({ post, onClose }) => {
               className="input h-48"
             />
             {formik.errors.content && (
-              <div className="text-red-500 text-sm mt-1">{formik.errors.content}</div>
+              <div className="text-red-500 text-sm mt-1">
+                {formik.errors.content}
+              </div>
             )}
           </div>
 
