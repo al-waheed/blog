@@ -34,6 +34,10 @@ const PostDetail = () => {
     }
   };
 
+  const toggleEditModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
+  } 
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
@@ -54,7 +58,7 @@ const PostDetail = () => {
           </div>
           <div className="mt-8 flex space-x-4">
             <button
-              onClick={() => setIsEditModalOpen(true)}
+              onClick={toggleEditModal}
               className="btn bg-green-500 hover:bg-green-600"
             >
               Edit Post
@@ -69,7 +73,7 @@ const PostDetail = () => {
         </div>
       </div>
       {isEditModalOpen && (
-        <EditPostModal post={post} onClose={() => setIsEditModalOpen(false)} />
+        <EditPostModal post={post} onClose={toggleEditModal} />
       )}
     </div>
   );

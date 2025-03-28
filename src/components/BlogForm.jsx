@@ -11,7 +11,7 @@ const BlogForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState(null);
-  const categories = useSelector((state) => state.blog.categories);
+  const categories = useSelector((state) => state.blog);
 
   const formik = useFormik({
     initialValues: {

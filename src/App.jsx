@@ -14,9 +14,9 @@ function App() {
           <div className="min-h-screen bg-gray-50">
             <nav className="bg-white shadow-md sticky top-0 z-50">
               <div className="container mx-auto px-4">
-                <div className="flex justify-between items-center h-16">
+                <div className="flex justify-between items-center h-20">
                   <Link to="/" className="text-2xl font-bold text-blue-600">
-                    Blog App
+                    Blog Hyper
                   </Link>
                   <div className="space-x-4">
                     <Link to="/" className="text-gray-600 hover:text-gray-900">
@@ -40,7 +40,7 @@ function App() {
 
             <footer className="bg-gray-800 text-white py-8">
               <div className="container mx-auto px-4 text-center">
-                <p>© 2025 Blog App. Share your stories with the world.</p>
+                <p>© 2025 Blog Hyper. Share your stories with the world.</p>
               </div>
             </footer>
           </div>

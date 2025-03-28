@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { updatePost } from "../redux/blogSlice";
+import toast from "react-hot-toast";
 
 const EditPostModal = ({ post, onClose }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const EditPostModal = ({ post, onClose }) => {
     }),
     onSubmit: (values) => {
       dispatch(updatePost({ id: post.id, ...values }));
+      toast.success("Post edited successfully!");
       onClose();
     },
   });

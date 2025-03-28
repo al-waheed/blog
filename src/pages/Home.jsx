@@ -5,21 +5,19 @@ import toast from "react-hot-toast";
 
 const Home = () => {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    if (email && name) {
-      toast.success(`Thanks for subscribing, ${name}!`);
+    if (email) {
+      toast.success("Thanks for subscribing");
       setEmail("");
-      setName("");
     }
   };
 
   return (
     <div>
       <div
-        className="relative min-h-screen flex items-center"
+        className="relative min-h-[calc(100vh-5rem)] flex items-center"
         style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1499750310107-5fef28a66643)",
@@ -69,7 +67,7 @@ const Home = () => {
       </div>
 
       {/* Newsletter Section */}
-      <div className="bg-gradient-to-r from-purple-600 to-blue-600 py-20">
+      <div className="bg-gradient-to-r from-purple-600 to-blue-600 py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4 text-white">
@@ -83,15 +81,7 @@ const Home = () => {
               onSubmit={handleSubscribe}
               className="space-y-4 max-w-lg mx-auto"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
-                  className="input bg-white/10 text-white placeholder-gray-300 border-white/20"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-1">
                 <input
                   type="email"
                   value={email}
