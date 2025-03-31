@@ -1,13 +1,17 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deletePost } from "../redux/blogSlice";
 import EditPostModal from "../components/EditPostModal";
+import ShareBlogPost from "../components/ShareBlogPost";
+import BlogPostComment from "../components/BlogPostComment";
+import BlogEmojiReactions from "../components/BlogEmojiReaction";
 import { useState } from "react";
 
 const PostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const post = useSelector((state) =>
@@ -36,11 +40,33 @@ const PostDetail = () => {
 
   const toggleEditModal = () => {
     setIsEditModalOpen(!isEditModalOpen);
-  } 
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        {/* Action Buttons: Edit, Delete & Share */}
+        <div className="flex justify-between items-center p-4 bg-gray-100 border-b border-gray-200">
+          <div className="flex gap-4">
+            <button
+              onClick={toggleEditModal}
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-medium"
+            >
+              ✏️ Edit Post
+            </button>
+            <button
+              onClick={handleDelete}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium"
+            >
+              🗑️ Delete Post
+            </button>
+          </div>
+          <ShareBlogPost
+            url={`${window.location.origin}${location.pathname}`}
+            title={post.title}
+          />
+        </div>
+
         {post.imageUrl && (
           <img
             src={post.imageUrl}
@@ -56,20 +82,11 @@ const PostDetail = () => {
           <div className="prose max-w-none">
             <p className="whitespace-pre-wrap">{post.content}</p>
           </div>
-          <div className="mt-8 flex space-x-4">
-            <button
-              onClick={toggleEditModal}
-              className="btn bg-green-500 hover:bg-green-600"
-            >
-              Edit Post
-            </button>
-            <button
-              onClick={handleDelete}
-              className="btn bg-red-500 hover:bg-red-600"
-            >
-              Delete Post
-            </button>
-          </div>
+          <ShareBlogPost
+            url={`${window.location.origin}${location.pathname}`}
+            title={post.title}
+          />
+          <BlogPostComment />
         </div>
       </div>
       {isEditModalOpen && (
