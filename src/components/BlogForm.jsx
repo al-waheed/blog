@@ -11,7 +11,7 @@ const BlogForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState(null);
-  const categories = useSelector((state) => state.blog);
+  const categories = useSelector((state) => state.blog.categories);
 
   const formik = useFormik({
     initialValues: {
@@ -40,14 +40,14 @@ const BlogForm = () => {
             reader.onerror = reject;
             reader.readAsDataURL(values.imageFile);
           });
-        } catch (error) {
-          console.log(error);
+        } catch (e) {
+          console.log(e);
           toast.error("Error processing image. Please try again.");
           return;
         }
       }
 
-      const newPost = dispatch(
+      dispatch(
         addPost({
           title: values.title,
           content: values.content,
@@ -60,7 +60,7 @@ const BlogForm = () => {
       toast.success("Post created successfully!");
       resetForm();
       setImagePreview(null);
-      navigate(`/post/${newPost.id}`);
+      navigate("/");
     },
   });
 

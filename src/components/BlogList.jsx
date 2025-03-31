@@ -6,12 +6,12 @@ import { FiSearch } from "react-icons/fi";
 const BlogList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { posts } = useSelector((state) => state.blog);
-   console.log("state",posts);
-  const filteredPosts = posts.filter((post) => {
+
+  const filteredBlogPosts = posts.filter((post) => {
     return (
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.author?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
@@ -34,7 +34,7 @@ const BlogList = () => {
         </div>
       </div>
 
-      {filteredPosts.length === 0 ? (
+      {filteredBlogPosts.length === 0 ? (
         <div className="text-center py-12">
           <h2 className="text-2xl font-bold text-gray-700 mb-4">
             {posts.length === 0 ? "No posts yet" : "No matching posts found"}
@@ -45,7 +45,7 @@ const BlogList = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPosts.map((post) => (
+          {filteredBlogPosts.map((post) => (
             <Link to={`/post/${post.id}`} key={post.id}>
               <div className="card transform hover:scale-105 transition-transform duration-200">
                 {post.imageUrl && (

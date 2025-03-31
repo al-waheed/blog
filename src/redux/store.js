@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import blogReducer from './blogSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import blogReducer from "./blogSlice";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
 };
 
