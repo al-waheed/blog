@@ -13,16 +13,6 @@ const EditPostModal = ({ post, onClose }) => {
   const [imagePreview, setImagePreview] = useState(post.imageUrl || null);
   const categories = useSelector((state) => state.blog.categories);
 
-  useEffect(() => {
-    if (post.imageFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(post.imageFile);
-    }
-  }, [post.imageFile]);
-
   const formik = useFormik({
     initialValues: {
       title: post.title,
