@@ -57,7 +57,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Latest Posts Section */}
       <div id="latest" className="container mx-auto px-4 py-16">
         <h2 className="text-4xl font-bold mb-2 text-center">Latest Stories</h2>
         <p className="text-gray-600 text-center mb-12">
@@ -66,7 +65,6 @@ const Home = () => {
         <BlogList />
       </div>
 
-      {/* Newsletter Section */}
       <div className="bg-gradient-to-r from-purple-600 to-blue-600 py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">

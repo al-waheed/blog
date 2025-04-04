@@ -27,6 +27,7 @@ const blogSlice = createSlice({
         id: uuidv4(),
         ...action.payload,
         createdAt: new Date().toISOString(),
+        comments: [],
       });
     },
     deletePost: (state, action) => {
@@ -39,8 +40,18 @@ const blogSlice = createSlice({
         Object.assign(post, updates);
       }
     },
+    addComment: (state, action) => {
+      const { postId, name, text } = action.payload;
+      const post = state.posts.find((post) => post.id === postId);
+
+      if (post) {
+        post.comments = post.comments || [];
+        post.comments.unshift({ name, text });
+      }
+    },
   },
 });
 
-export const { addPost, deletePost, updatePost } = blogSlice.actions;
+export const { addPost, deletePost, updatePost, addComment } =
+  blogSlice.actions;
 export default blogSlice.reducer;

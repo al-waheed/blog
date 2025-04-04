@@ -1,10 +1,12 @@
+// import { useState } from "react";
 import { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../redux/blogSlice";
 import { useNavigate } from "react-router-dom";
-import { useDropzone } from "react-dropzone";
+import ImageUpload from "./ImageUpload";
 import toast from "react-hot-toast";
 
 const BlogForm = () => {
@@ -46,7 +48,6 @@ const BlogForm = () => {
           return;
         }
       }
-
       dispatch(
         addPost({
           title: values.title,
@@ -55,43 +56,13 @@ const BlogForm = () => {
           category: values.category,
           author: values.author,
         })
-      ).payload;
+      );
 
       toast.success("Post created successfully!");
       resetForm();
       setImagePreview(null);
       navigate("/");
     },
-  });
-
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      if (acceptedFiles?.length) {
-        const file = acceptedFiles[0];
-        if (file.size > 5 * 1024 * 1024) {
-          toast.error("File size too large. Please upload an image under 5MB.");
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImagePreview(reader.result);
-        };
-        reader.readAsDataURL(file);
-
-        formik.setFieldValue("imageFile", file);
-        formik.setFieldValue("imageUrl", "");
-      }
-    },
-    [formik]
-  );
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".gif"],
-    },
-    maxFiles: 1,
   });
 
   const removeImage = () => {
@@ -188,27 +159,12 @@ const BlogForm = () => {
                 </button>
               </div>
             ) : (
-              <div
-                {...getRootProps()}
-                className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer
-                  ${
-                    isDragActive
-                      ? "border-blue-500 bg-blue-50"
-                      : "border-gray-300"
-                  }`}
-              >
-                <input {...getInputProps()} />
-                <div>
-                  <p className="text-gray-600">
-                    Drag & drop an image here, or click to select
-                  </p>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Supports: JPG, PNG, GIF (max 5MB)
-                  </p>
-                </div>
-              </div>
+              <ImageUpload
+                formik={formik}
+                setFieldValue={formik.setFieldValue}
+                setImagePreview={setImagePreview}
+              />
             )}
-
             {!formik.values.imageFile && (
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -231,7 +187,6 @@ const BlogForm = () => {
             </div>
           )}
         </div>
-
         <div>
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Content

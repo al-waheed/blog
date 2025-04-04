@@ -1,11 +1,10 @@
+import { useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deletePost } from "../redux/blogSlice";
 import EditPostModal from "../components/EditPostModal";
 import ShareBlogPost from "../components/ShareBlogPost";
 import BlogPostComment from "../components/BlogPostComment";
-import BlogEmojiReactions from "../components/BlogEmojiReaction";
-import { useState } from "react";
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -45,7 +44,6 @@ const PostDetail = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Action Buttons: Edit, Delete & Share */}
         <div className="flex justify-between items-center p-4 bg-gray-100 border-b border-gray-200">
           <div className="flex gap-4">
             <button
@@ -58,7 +56,7 @@ const PostDetail = () => {
               onClick={handleDelete}
               className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium"
             >
-              🗑️ Delete Post
+              🗑️ Delete
             </button>
           </div>
           <ShareBlogPost
@@ -86,7 +84,7 @@ const PostDetail = () => {
             url={`${window.location.origin}${location.pathname}`}
             title={post.title}
           />
-          <BlogPostComment />
+          <BlogPostComment postId={post.id} />
         </div>
       </div>
       {isEditModalOpen && (

@@ -1,20 +1,34 @@
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updatePost } from "../redux/blogSlice";
+import ImageUpload from "./ImageUpload";
 import toast from "react-hot-toast";
 
 const EditPostModal = ({ post, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [imagePreview, setImagePreview] = useState(post.imageUrl || null);
   const categories = useSelector((state) => state.blog.categories);
+
+  useEffect(() => {
+    if (post.imageFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(post.imageFile);
+    }
+  }, [post.imageFile]);
 
   const formik = useFormik({
     initialValues: {
       title: post.title,
       content: post.content,
       imageUrl: post.imageUrl || "",
+      imageFile: null,
       category: post.category,
       author: post.author,
     },
@@ -25,13 +39,35 @@ const EditPostModal = ({ post, onClose }) => {
       category: Yup.string().required("Category is required"),
       author: Yup.string().required("Author name is required"),
     }),
-    onSubmit: (values) => {
-      dispatch(updatePost({ id: post.id, ...values }));
+
+    onSubmit: async (values) => {
+      let finalImageUrl = values.imageUrl;
+      if (values.imageFile) {
+        try {
+          const reader = new FileReader();
+          finalImageUrl = await new Promise((resolve, reject) => {
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(values.imageFile);
+          });
+        } catch (e) {
+          console.log(e);
+          toast.error("Error processing image. Please try again.");
+          return;
+        }
+      }
+      dispatch(updatePost({ id: post.id, ...values, imageUrl: finalImageUrl }));
       toast.success("Post successfully edited!");
       onClose();
       navigate("/");
     },
   });
+
+  const removeImage = () => {
+    formik.setFieldValue("imageFile", null);
+    formik.setFieldValue("imageUrl", "");
+    setImagePreview(null);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -57,8 +93,8 @@ const EditPostModal = ({ post, onClose }) => {
             <div>
               <input
                 type="text"
-                name="title"
-                placeholder="Post Title"
+                name="author"
+                placeholder="Your name"
                 onChange={formik.handleChange}
                 value={formik.values.author}
                 className="input"
@@ -91,21 +127,51 @@ const EditPostModal = ({ post, onClose }) => {
             )}
           </div>
 
-          <div>
-            <input
-              type="url"
-              name="imageUrl"
-              placeholder="Image URL (optional)"
-              onChange={formik.handleChange}
-              value={formik.values.imageUrl}
-              className="input"
+          {imagePreview && (
+            <div className="relative mb-4">
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-full h-48 object-cover rounded-lg"
+              />
+              <button
+                type="button"
+                onClick={removeImage}
+                className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
+              >
+                ✕
+              </button>
+            </div>
+          )}
+
+          {!imagePreview && (
+            <ImageUpload
+              formik={formik}
+              setFieldValue={formik.setFieldValue}
+              setImagePreview={setImagePreview}
             />
-            {formik.errors.imageUrl && (
-              <div className="text-red-500 text-sm mt-1">
-                {formik.errors.imageUrl}
+          )}
+
+          {!formik.values.imageFile && (
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span className="text-gray-500">OR</span>
               </div>
-            )}
-          </div>
+              <input
+                type="url"
+                name="imageUrl"
+                placeholder="Image URL (optional)"
+                onChange={formik.handleChange}
+                value={formik.values.imageUrl}
+                className="input pl-12"
+              />
+              {formik.errors.imageUrl && (
+                <div className="text-red-500 text-sm mt-1">
+                  {formik.errors.imageUrl}
+                </div>
+              )}
+            </div>
+          )}
 
           <div>
             <textarea
@@ -113,7 +179,7 @@ const EditPostModal = ({ post, onClose }) => {
               placeholder="Post Content"
               onChange={formik.handleChange}
               value={formik.values.content}
-              className="input h-48"
+              className="input h-40"
             />
             {formik.errors.content && (
               <div className="text-red-500 text-sm mt-1">
