@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BlogList from "../components/BlogList";
+import BlogPostList from "../components/BlogPostList";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -62,7 +62,7 @@ const Home = () => {
         <p className="text-gray-600 text-center mb-12">
           Discover what others are writing about
         </p>
-        <BlogList />
+        <BlogPostList />
       </div>
 
       <div className="bg-gradient-to-r from-purple-600 to-blue-600 py-12">

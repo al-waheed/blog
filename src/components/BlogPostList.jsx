@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 
-const BlogList = () => {
+const BlogPostList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { posts } = useSelector((state) => state.blog);
 
@@ -18,7 +18,6 @@ const BlogList = () => {
 
   return (
     <div>
-      {/* Search and Filter Section */}
       <div className="mb-8 space-y-4">
         <div className="flex-1 min-w-[200px]">
           <div className="relative">
@@ -60,7 +59,7 @@ const BlogList = () => {
                     <span className="text-sm font-medium text-blue-600">
                       {post.category}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-xs text-gray-500">
                       {new Date(post.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -70,11 +69,9 @@ const BlogList = () => {
                   <p className="text-gray-600 mb-4 line-clamp-3">
                     {post.content}
                   </p>
-                  {post.author && (
-                    <div className="flex items-center text-sm text-gray-500">
-                      <span className="font-medium">By {post.author}</span>
-                    </div>
-                  )}
+                  <div className="flex items-center italic text-xs text-gray-500">
+                    <span className="font-medium">By {post.author}</span>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -85,4 +82,4 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+export default BlogPostList;

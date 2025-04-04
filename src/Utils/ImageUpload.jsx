@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 const ImageUpload = ({ formik, setFieldValue, setImagePreview }) => {
@@ -10,13 +10,11 @@ const ImageUpload = ({ formik, setFieldValue, setImagePreview }) => {
           toast.error("File size too large. Please upload an image under 5MB.");
           return;
         }
-
         const reader = new FileReader();
         reader.onloadend = () => {
           setImagePreview(reader.result);
         };
         reader.readAsDataURL(file);
-
         setFieldValue("imageFile", file);
         setFieldValue("imageUrl", "");
       }

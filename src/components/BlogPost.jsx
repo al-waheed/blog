@@ -1,15 +1,14 @@
-// import { useState } from "react";
-import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../redux/blogSlice";
 import { useNavigate } from "react-router-dom";
-import ImageUpload from "./ImageUpload";
+import ImageUpload from "../Utils/ImageUpload";
+import { convertImageToBase64 } from "../Utils/ConvertImageToBase64";
 import toast from "react-hot-toast";
 
-const BlogForm = () => {
+const BlogPost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState(null);
@@ -24,6 +23,7 @@ const BlogForm = () => {
       category: "",
       author: "",
     },
+
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
       content: Yup.string().required("Content is required"),
@@ -31,17 +31,12 @@ const BlogForm = () => {
       category: Yup.string().required("Category is required"),
       author: Yup.string().required("Author name is required"),
     }),
+
     onSubmit: async (values, { resetForm }) => {
       let finalImageUrl = values.imageUrl;
-
       if (values.imageFile) {
         try {
-          const reader = new FileReader();
-          finalImageUrl = await new Promise((resolve, reject) => {
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(values.imageFile);
-          });
+          finalImageUrl = await convertImageToBase64(values.imageFile);
         } catch (e) {
           console.log(e);
           toast.error("Error processing image. Please try again.");
@@ -214,4 +209,4 @@ const BlogForm = () => {
   );
 };
 
-export default BlogForm;
+export default BlogPost;

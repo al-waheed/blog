@@ -6,7 +6,7 @@ import EditPostModal from "../components/EditPostModal";
 import ShareBlogPost from "../components/ShareBlogPost";
 import BlogPostComment from "../components/BlogPostComment";
 
-const PostDetail = () => {
+const BlogPostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -94,4 +94,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default BlogPostDetail;

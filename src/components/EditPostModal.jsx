@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updatePost } from "../redux/blogSlice";
-import ImageUpload from "./ImageUpload";
+import ImageUpload from "../Utils/ImageUpload";
+import { convertImageToBase64 } from "../Utils/ConvertImageToBase64";
 import toast from "react-hot-toast";
 
 const EditPostModal = ({ post, onClose }) => {
@@ -22,6 +23,7 @@ const EditPostModal = ({ post, onClose }) => {
       category: post.category,
       author: post.author,
     },
+
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
       content: Yup.string().required("Content is required"),
@@ -34,12 +36,7 @@ const EditPostModal = ({ post, onClose }) => {
       let finalImageUrl = values.imageUrl;
       if (values.imageFile) {
         try {
-          const reader = new FileReader();
-          finalImageUrl = await new Promise((resolve, reject) => {
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(values.imageFile);
-          });
+          finalImageUrl = await convertImageToBase64(values.imageFile);
         } catch (e) {
           console.log(e);
           toast.error("Error processing image. Please try again.");
@@ -117,7 +114,7 @@ const EditPostModal = ({ post, onClose }) => {
             )}
           </div>
 
-          {imagePreview && (
+          {imagePreview ? (
             <div className="relative mb-4">
               <img
                 src={imagePreview}
@@ -132,9 +129,7 @@ const EditPostModal = ({ post, onClose }) => {
                 ✕
               </button>
             </div>
-          )}
-
-          {!imagePreview && (
+          ) : (
             <ImageUpload
               formik={formik}
               setFieldValue={formik.setFieldValue}

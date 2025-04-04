@@ -3,8 +3,8 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
 import Home from "./pages/Home";
-import CreatePost from "./pages/CreatePost";
-import PostDetail from "./pages/PostDetail";
+import CreateBlogPost  from "./pages/CreateBlogPost";
+import BlogPostDetail from "./pages/BlogPostDetail";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
                     Blog Hyper
                   </Link>
                   <div className="space-x-4">
-                    <Link to="/" className="text-gray-600 hover:text-gray-900">
+                    <Link to="/" className="text-gray-700 font-semi-bold hover:text-gray-900">
                       Home
                     </Link>
                     <Link to="/create" className="btn">
@@ -33,8 +33,8 @@ function App() {
             <main className="min-h-screen">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/create" element={<CreatePost />} />
-                <Route path="/post/:id" element={<PostDetail />} />
+                <Route path="/create" element={<CreateBlogPost />} />
+                <Route path="/post/:id" element={<BlogPostDetail />} />
               </Routes>
             </main>
 
