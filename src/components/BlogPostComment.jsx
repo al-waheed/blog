@@ -28,7 +28,7 @@ const BlogPostComment = ({ postId }) => {
 
   return (
     <div className="mt-8">
-      <h3 className="text-xl font-semibold mb-4">Comments</h3>
+      <h3 className="text-md font-semibold mb-4">Comments</h3>
       <ul className="space-y-4 mb-6">
         {!comments.length ? (
           <p className="text-gray-500 text-sm">
@@ -40,10 +40,10 @@ const BlogPostComment = ({ postId }) => {
               <div className="flex gap-3">
                 <span className="text-[20px]">🗣️</span>
                 <div className="border border-gray-400 rounded-md px-3 py-2">
-                  <p className="text-sm font-bold text-gray-800 mb-1 uppercase">
+                  <p className="text-xs font-bold text-gray-800 mb-1 uppercase">
                     {comment.name}
                   </p>
-                  <p className="text-gray-800 ml-4">{comment.text}</p>
+                  <p className="text-gray-800 ml-4 text-xs">{comment.text}</p>
                 </div>
               </div>
             </li>
