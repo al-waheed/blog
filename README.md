@@ -31,24 +31,21 @@ It empowers users to create, update, and comment on posts, all within a clean an
 ## 🖼 Screenshots
 
 ### 🔹 Landing Page
-
 ![Landing](./public/img/01.png)
 
 ### 🔹 Create & Edit Posts
-
 ![Create Post](./public/img/blog1.png)
 
 ### 🔹 Blog Feed Overview
-
 ![Blog Post](./public/img/blog2.png)
 
 ---
 
 ## 🛠 Built With
 
--**React + Vite** – Fast, modern frontend framework and build tool.
--**Redux Toolkit** – Centralized and predictable state management.
--**Redux Persist** – Seamless local state persistence.
--**Tailwind CSS** – Elegant, utility-first styling framework.
+- **React + Vite** – Fast, modern frontend framework and build tool.
+- **Redux Toolkit** – Centralized and predictable state management.
+- **Redux Persist** – Seamless local state persistence.
+- **Tailwind CSS** – Elegant, utility-first styling framework.
 
 ---
