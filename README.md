@@ -46,9 +46,9 @@ It empowers users to create, update, and comment on posts, all within a clean an
 
 ## 🛠 Built With
 
--**React + Vite** – Fast, modern frontend framework and build tool 
--**Redux Toolkit** – Centralized and predictable state management 
--**Redux Persist** – Seamless local state persistence 
--**Tailwind CSS** – Elegant, utility-first styling framework
+-**React + Vite** – Fast, modern frontend framework and build tool.
+-**Redux Toolkit** – Centralized and predictable state management.
+-**Redux Persist** – Seamless local state persistence.
+-**Tailwind CSS** – Elegant, utility-first styling framework.
 
 ---
